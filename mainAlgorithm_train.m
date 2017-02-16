@@ -86,30 +86,4 @@ for j = 1:10
     simDataset(j) = mean(simNeuron);
 end
 
-mean(simNeuron-red)
-
-
-STM = [0.46 0.44 0.44 0.44 0.28 0.52 0.49 0.40 0.41 0.55];
-OOP = [0.35 0.35 0.38 0.32 0.21 0.60 0.64 0.53 0.34 0.67];
-Suite2p = [0.45 0.45 0.47 0.48 0.48 0.57 0.63 0.59 0.45 0.72];
-
-mean(simDataset-STM)
-mean(simDataset-OOP)
-mean(simDataset-Suite2p)
-
-figure(9), imagesc(SSDx)
-% end
-% end
-figure(5), imagesc(SS,[0.2 0.6]); 
-
-
-figure, imagesc(SSD)
-
-
-
-
-
-
-% saving predictions
-spike_pred = calcium_train;     % fill spike_pred with your own predictions
-csvwrite([dataset '.train.pred.csv'], spike_pred);
+mean(simNeuron)
