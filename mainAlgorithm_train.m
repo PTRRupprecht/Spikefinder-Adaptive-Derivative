@@ -1,9 +1,10 @@
-% example matlab script for loading spikefinder data
-%
-% for more info see https://github.com/codeneuro/spikefinder
+% For more info on the competition, see https://github.com/codeneuro/spikefinder
+% Code written by Peter Rupprecht (2017), ptrrupprecht.wordpress.com
 
+% kurtosis for each dataset can predict the time lag that is lateron used
+% for prediction of spike timing
 clear Kurtouis
-for j = 1:10
+for j = 1%:10
     dataset = num2str(j);
     calcium_train = csvread([dataset '.train.calcium.csv']);
     spike_train = csvread([dataset '.train.spikes.csv']);
@@ -18,7 +19,11 @@ for j = 1:10
     end
 end
 
-optimal_delay = [28 22 29 32 49 9 7 9 17 8]; % optimal delay measured for the training dataset
+% The "optimal delay" is the delay that has been chosen in a parameter test
+% for the time lag; the kurtosis is used as a proxy to predict this
+% "optimal delay", as it was measured for the 10 training datasets, for yet
+% unknown datasets
+% optimal_delay = [28 22 29 32 49 9 7 9 17 8];
 optimal_delay = [24    26    26    34    37     4     1     1    19     1];
 Kurtouis(Kurtouis==0) = NaN;
 figure(839), hold on;
@@ -26,9 +31,9 @@ for j = 1:10
     plot(nanmean(Kurtouis(:,j)),optimal_delay(j)*2+2,'.');
     text(nanmean(Kurtouis(:,j))+0.023,optimal_delay(j)*2+2,num2str(j));
 end
-
+% Fit optimal_delay(kurtosis) -- since no model underlies this observation,
+% I simply used a spline for fitting
 [xData, yData] = prepareCurveData( nanmean(Kurtouis), optimal_delay );
-% Set up fittype and options.
 ft = fittype( 'smoothingspline' );
 opts = fitoptions( ft );
 opts.SmoothingParam = 0.0136;
