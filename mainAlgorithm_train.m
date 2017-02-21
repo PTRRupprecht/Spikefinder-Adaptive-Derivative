@@ -59,6 +59,14 @@ hold on; plot(fitresult)
 % Those will be combined (averaged/mean) in the vector 'simDataset',
 % containing one value for each dataset
 
+% the j-loop goes through all datasets
+
+% the n-loop goes through each neuron of the chosen dataset
+
+% the jj-loop serves to average across a finite time-window around the
+% optimal delay point, which in turn is set by the fit based on the
+% kurtosis values, as described above
+
 clear simDataset final_prediction
 for j = 1%:10
     % load dataset
@@ -99,7 +107,7 @@ for j = 1%:10
     end
 
     spike_pred = final_prediction;     % fill spike_pred with your own predictions
-%     csvwrite([dataset '.train.pred.csv'], spike_pred);
+    csvwrite([dataset '.train.pred.csv'], spike_pred);
     
     simDataset(j) = mean(simNeuron);
 end
