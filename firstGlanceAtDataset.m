@@ -59,39 +59,15 @@ figure, imagesc(([1:250]-20)/100,[],filterXX);
 xlabel('time (sec)');
 ylabel('neuron index');
 
-
+% This plot makes more sense once j = 1:10 (all datasets included)
+% it shows the scatter of correlation coefficients (indicating quality of
+% the measurements) for neurons in one dataset
 figure(243)
-for j = 1:10
+for j = 1:size(CCC,1)
     CC = CCC(j,:);
     CC = CC(CC~=0);
     plot(j*ones(size(CC))+ (rand(size(CC))-0.5)*0.5, CC,'.'); hold on
 end
 CCC(CCC==0) = NaN;
 figure(244); boxplot(CCC')
-    
-    
-    y = prediction; x = L_trace;
-    y(y==0) = NaN; x(y==0) = NaN;
-    [xData, yData] = prepareCurveData( x, y );
-    ft = fittype( 'a*x+b', 'independent', 'x', 'dependent', 'y' );
-    opts = fitoptions( ft ); opts.StartPoint = [1 1];
-    [fitresult, gof] = fit( xData, yData, ft, opts );
 
-    subtraction = L_trace-prediction*fitresult.a+fitresult.b;
-    
-    
-    corr(prediction,L_trace)
-       corr(subtraction,L_trace)
-    
-    
-
-    ffx = xcorr(subtraction,S_trace,'unbiased');
-    figure(43), plot(timet,ffx); hold on;
-    
-    
-    
-    
-
-% saving predictions
-spike_pred = calcium_train;     % fill spike_pred with your own predictions
-csvwrite([dataset '.train.pred.csv'], spike_pred);
