@@ -4,7 +4,7 @@
 % kurtosis for each dataset can predict the time lag that is lateron used
 % for prediction of spike timing
 clear Kurtouis
-for j = 1%:10
+for j = 1:10
     dataset = num2str(j);
     calcium_train = csvread([dataset '.train.calcium.csv']);
     spike_train = csvread([dataset '.train.spikes.csv']);
@@ -18,6 +18,10 @@ for j = 1%:10
         Kurtouis(n,j) = kurtosis(L_trace);
     end
 end
+
+% since the repository does not include all datasets, the remaining kurtosis values
+% as measured for the training dataset are provided within a mat file
+load('Kurtosis.mat');
 
 % The "optimal delay" is the delay that has been chosen in a parameter test
 % for the time lag; the kurtosis is used as a proxy to predict this
@@ -38,11 +42,10 @@ ft = fittype( 'smoothingspline' );
 opts = fitoptions( ft );
 opts.SmoothingParam = 0.0136;
 [fitresult, gof] = fit( xData, yData, ft, opts );
-
+% check that the fit is neither overfitting nor way off
 figure(839), hold on;
 for j = 1:10
     plot(nanmean(Kurtouis(:,j)),optimal_delay(j),'.');
-    text(nanmean(Kurtouis(:,j))+0.023,optimal_delay(j),num2str(j));
 end
 hold on; plot(fitresult)
 
