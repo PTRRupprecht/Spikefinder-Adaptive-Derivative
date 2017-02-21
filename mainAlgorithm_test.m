@@ -1,21 +1,10 @@
 
-clear Kurtouis
-for j = 1:10
-    dataset = num2str(j);
-    calcium_train = csvread([dataset '.train.calcium.csv']);
-    spike_train = csvread([dataset '.train.spikes.csv']);
-    
-    for n = 1:size(calcium_train,2)
-        L_trace = calcium_train(:,n);
-        indizes = find(~isnan(L_trace) & ((L_trace~=0 | circshift(L_trace,1)~=0)) );
-        L_trace = L_trace(indizes(2:end));
-        
-        L_trace = (L_trace-median(L_trace))/std(L_trace);
-        Kurtouis(n,j) = kurtosis(L_trace);
-    end
-end
+% For more detailed explanations, see the comments on 'mainAlgorith_train.m'
 
-optimal_delay = [28 22 29 32 49 9 7 9 17 8]; % optimal delay measured for the training dataset
+%% Choosing the best parameters for predictions
+
+load('Kurtosis.mat');
+
 optimal_delay = [24    26    26    34    37     4     1     1    19     1];
 Kurtouis(Kurtouis==0) = NaN;
 figure(839), hold on;
@@ -38,9 +27,10 @@ for j = 1:10
 end
 hold on; plot(fitresult)
 
+%% main part of the program
 clear simDataset
-%% load dataset
-for j = 1:10
+for j = 4%1:10
+    % load dataset
     dataset = num2str(j);
     calcium_train = csvread([dataset '.train.calcium.csv']);
     spike_train = csvread([dataset '.train.spikes.csv']);
