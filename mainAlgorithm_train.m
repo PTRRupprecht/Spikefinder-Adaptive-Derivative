@@ -1,10 +1,14 @@
 % For more info on the competition, see https://github.com/codeneuro/spikefinder
 % Code written by Peter Rupprecht (2017), ptrrupprecht.wordpress.com
 
+
+%% preliminary part for choosing the best parameter space (mainly to estimate
+% the estimated delay of a calcium transient upon an action potential event
+
 % kurtosis for each dataset can predict the time lag that is lateron used
 % for prediction of spike timing
 clear Kurtouis
-for j = 1:10
+for j = 1%:10
     dataset = num2str(j);
     calcium_train = csvread([dataset '.train.calcium.csv']);
     spike_train = csvread([dataset '.train.spikes.csv']);
@@ -49,9 +53,15 @@ for j = 1:10
 end
 hold on; plot(fitresult)
 
-clear simDataset
-%% load dataset
-for j = 1:10
+%% Main part of the program
+% For each dataset, 'simNeuron' will contain the predictive/correlative
+% values for each neuron
+% Those will be combined (averaged/mean) in the vector 'simDataset',
+% containing one value for each dataset
+
+clear simDataset final_prediction
+for j = 1%:10
+    % load dataset
     dataset = num2str(j);
     calcium_train = csvread([dataset '.train.calcium.csv']);
     spike_train = csvread([dataset '.train.spikes.csv']);
@@ -89,7 +99,7 @@ for j = 1:10
     end
 
     spike_pred = final_prediction;     % fill spike_pred with your own predictions
-    csvwrite([dataset '.train.pred.csv'], spike_pred);
+%     csvwrite([dataset '.train.pred.csv'], spike_pred);
     
     simDataset(j) = mean(simNeuron);
 end
