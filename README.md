@@ -7,6 +7,12 @@ This algorithm is extremely simple, basically consisting of one simple derivativ
 
 Using the training data provided by the spikefinder competition, I realized that this optimal delay can be accurately estimated using the measured kurtosis of the calcium time trace, providing a robust and very hands-off algorithm.
 
-This repository includes a Matlab-file that reads in the data and visualized some of its properties (firstGlanceAtDataset.m, unrelated to the spikefinder competition), then the algorithm itself, applied to either the training and the test dataset. I uploaded a small fraction of the original dataset, such that algorithms can be run without any addition after downloading the full content of the repository.
+This repository includes
+
+1) a Matlab-file that reads in the data and visualized some of its properties (firstGlanceAtDataset.m, unrelated to the spikefinder competition)
+
+2) then the algorithm itself, applied to a) either the training and b) the test dataset
+
+I uploaded a small fraction of the original dataset, such that algorithms can be run without any addition after downloading the full content of the repository.
 
 Peter Rupprecht (February 2017)
