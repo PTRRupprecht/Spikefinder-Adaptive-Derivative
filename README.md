@@ -1,5 +1,6 @@
 # SpikefinderCompetition2017
 An algorithm for the spikefinder competition : http://spikefinder.codeneuro.org/
+For a more accessible description with pictures, check out this blog post: https://ptrrupprecht.wordpress.com/2017/02/22/the-spikefinder-dataset/
 
 The purpose of the competition is to find an algorithm that is fed with calcium imaging time traces of single neurons and is able to output the most likely temporal trace of spiking probabilities.
 
